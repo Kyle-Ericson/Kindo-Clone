@@ -1,102 +1,62 @@
+var Client = require("./Client.js").Client;
+var Protocol = require("./KindoProtocol.js").Protocol;
+var Game = require("./Game.js").Game;
+var net = require("net");
 
-const TTTP = {
-
-}// end TTTP
-
-const Game = {
-
-}// end Game
-
-
-
-/////////////////////////////////////
 // This is the server class.
-class Server {
+exports.Server = class Server {
     // The server constructor.
     constructor() {
-
+        // The servers port.
+        this.port = 1234;
+        // An array of all connected clients.
+        this.clients = [];
+        // A list of active games.
+        this.games = [];
+        // An instance of the Game class.
+        this.game = new Game();
+        // This creates the server.
+        this.server = net.createServer((connection) => {
+            this.clients.push(new Client(this, connection));
+        });
+        // This sets the server to listen on the given port.
+        this.server.listen(this.port, () => { 
+            console.log("Server listening on " + this.port);
+        });
     }
-
-}// end server
-
-
-
-
-
-/////////////////////////////////////
-// This is the client class.
-class Client {
-    // The client constructor.
-    // Parameter: Server
-    // Parameter: Socket
-    constructor(server, socket) {
-        // 0: Spectator, 1: Player1, 2: Player2.
-        this.playerId = 0;
-        // Holds a reference to the server.
-        this.server = server;
-        // This client's socket.
-        this.socket = socket;
-        // Holds the buffer for controlling data flow.
-        this.buffer = Buffer.aloc(0);
-        // This client's username.
-        this.username = "";
-        // If there is an error.
-        this.socket.on('error', (msg) = > {console.log(msg)});
-        // If the client loses connection.
-        this.socket.on('close', () => { this.server.handleDisconnect(this); });
-        // For incoming data.
-        this.socket.on('data', (data) => { this.handleData(data); });
-        // Print to confirm connection.
-        console.log("Client connected.");
-    }
-    // This function handles the incoming data and decides what to do with it.
-    // Parameter: Buffer
-    handleData(data) {
-        // Adds the new data to the end of the buffer.
-        this.buffer = Buffer.concat([this.buffer, Buffer.from(data)]);
-
-        // If buffer is not empty, test the packet.
-        while(this.buffer.length > 0) {
-            // Attempt to read the packet, break out if valid packet.
-            if(this.testPacket()) break;
-            // If unexpected data is found destroy data and try again.
-            destroyStreamData();
+    // This runs when a client disconnects.
+    // Param: game <Game>
+    // Param: client <Client>
+    onDisconnect(game, client) {
+        // Remove client from the clients array.
+        this.clients.splice(this.clients.indexOf(client), 1);
+        // If the client is a player, that player is null.
+        if(game.player1 === client) game.player1 = null;
+        if(game.player2 === client) game.player2 = null;
+        // If a player is null reset the game.
+        if(game.player1 == null || game.player2 == null) {
+            game.reset();
+            this.broadcastStatus(game);
         }
-    }
-    // Destroys the leading data in the stream.
-    destroyStreamData() {
-        this.buffer = this.buffer.slice(1, this.buffer.length);
-    }
-    // Attempts to read the packet.
-    // Return: Boolean
-    testPacket() {
-        switch(this.getPacketType()) {
-            // No valid packet.
-            case null:
-                break;
-            // Join packet.
-            case "JOIN": readPacketJoin();
-                break;
-            // Move packet.
-            case "MOVE": readPacketMove();
-                break;
-            // This will happen if there is an unexpected packet in the stream.
-            default:
-                return false;
-                break;
-        }
-        return true;
-    }
-    // Gets the packets type.
-    // Return: String
-    getPacketType() {
-        if(this.buffer.length < 4) return null;
-        return this.buffer.slice(0,4).toString();
-    }
-    // Splits the buffer at a given point, removing that data from the buffer.
-    splitBuffer(n) {
-        this.buffer = this.buffer.slice(n, this.buffer.length);
-    }
 
 
-}// end connection
+    }
+    // This broadcasts a packet to all clients in the specified game.
+    // Param: game <Game> The target game's id.
+    // Param: buffer <Buffer>
+    broadcast(game, buffer) {
+
+    }
+    // This broadcasts the game status to all clients
+    // the specified game.
+    // Param: game <Game>
+    broadcastStatus(game) {
+
+    }
+    // This checks to see if the specified game is ready.
+    // Param: game <Game>
+    isReady(game) {
+
+    }
+
+}
