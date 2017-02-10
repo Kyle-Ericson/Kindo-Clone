@@ -27,6 +27,8 @@ class Server {
 // This is the client class.
 class Client {
     // The client constructor.
+    // Parameter: Server
+    // Parameter: Socket
     constructor(server, socket) {
         // 0: Spectator, 1: Player1, 2: Player2.
         this.playerId = 0;
@@ -48,30 +50,52 @@ class Client {
         console.log("Client connected.");
     }
     // This function handles the incoming data and decides what to do with it.
-    // Parameters: data <Buffer>.
+    // Parameter: Buffer
     handleData(data) {
         // Adds the new data to the end of the buffer.
         this.buffer = Buffer.concat([this.buffer, Buffer.from(data)]);
+
         // If buffer is not empty, test the packet.
         while(this.buffer.length > 0) {
-            // Attempt to read the packet.
-            if(this.testPacket)
-
+            // Attempt to read the packet, break out if valid packet.
+            if(this.testPacket()) break;
+            // If unexpected data is found destroy data and try again.
+            destroyStreamData();
         }
     }
-    // Attempts to read the packet
+    // Destroys the leading data in the stream.
+    destroyStreamData() {
+        this.buffer = this.buffer.slice(1, this.buffer.length);
+    }
+    // Attempts to read the packet.
+    // Return: Boolean
     testPacket() {
         switch(this.getPacketType()) {
+            // No valid packet.
             case null:
                 break;
+            // Join packet.
             case "JOIN": readPacketJoin();
                 break;
+            // Move packet.
             case "MOVE": readPacketMove();
                 break;
+            // This will happen if there is an unexpected packet in the stream.
             default:
                 return false;
                 break;
         }
+        return true;
+    }
+    // Gets the packets type.
+    // Return: String
+    getPacketType() {
+        if(this.buffer.length < 4) return null;
+        return this.buffer.slice(0,4).toString();
+    }
+    // Splits the buffer at a given point, removing that data from the buffer.
+    splitBuffer(n) {
+        this.buffer = this.buffer.slice(n, this.buffer.length);
     }
 
 
