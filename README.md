@@ -1,17 +1,18 @@
-## Kindo-Clone
-A simple game about outsmarting your enemy.
+# Kindo
+A simple game about outsmarting your enemy.  
+
+## Protocol v0.0.1 ##
+
+### Packets from server
+
+JOIN - A join response packet from the server.  
+
+| Description | Size | Offset | Type |
+|:-----------:|:----:|:------:|:----:|
+| The packet type | 4 | 0 | ascii |
 
 
-Kindo Protocol v0.0.1  
-Kyle Ericson
 
-
-
-
-# Packets from server
-
-
-#### Size    Offset    Type    Description
 
 JOIN - The JOIN response from the server.
 
