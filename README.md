@@ -33,14 +33,14 @@ v0.0.1
 |Status (0:Not ready, 1:Start Game)|1|4|uint8|
 
 <br>
-#### Update Packet - This packet updates the clients games.
+#### Update Packet - This packet updates the client's games.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 Packet type, UPDT|4|0|ascii|
 
 <br>
-#### Chat Packet - Broadcasts a chat messages.
+#### Chat Packet - Sends a chat messages.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
