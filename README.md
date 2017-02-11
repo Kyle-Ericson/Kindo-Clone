@@ -19,7 +19,7 @@ v0.0.1
 #### Join Packet - The Join response from the server.  
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 |The packet type, JOIN|4|0|ascii|
 |Response (0:Fail, 1:P1, 2:P2, 3:Spec)|1|4|uint8|
 |Error Code|1|5|uint8|
@@ -28,7 +28,7 @@ v0.0.1
 #### Start Packet - When the server is ready to start the game.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 |Packet type, STRT|4|0|ascii|
 |Status (0:Not ready, 1:Start Game)|1|4|uint8|
 
@@ -36,14 +36,14 @@ v0.0.1
 #### Update Packet - This packet updates the client's games.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 Packet type, UPDT|4|0|ascii|
 
 <br>
 #### Chat Packet - Sends a chat messages.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 Packet type, CHAT|4|0|ascii|
 
 <br>
@@ -55,7 +55,7 @@ Packet type, CHAT|4|0|ascii|
 #### Join Packet - Join request packet.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 |The packet type, JOIN|4|0|ascii|
 |Join as (1:Play, 2:Spec)|1|4|uint8|
 |Game Id|1|5|uint8|
@@ -66,16 +66,16 @@ Packet type, CHAT|4|0|ascii|
 #### Chat Packet - When a chat is sent.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 
 <br>
 #### Turn Packet - Sends the players turn information.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
 
 <br>
 #### End Turn Packet - Sends when the player is ready to end their turn.
 
 | Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---:|
