@@ -1,5 +1,5 @@
 var Client = require("./Client.js").Client;
-var Protocol = require("./KindoProtocol.js").Protocol;
+var KindoP = require("./KindoProtocol.js").Protocol;
 var Game = require("./Game.js").Game;
 
 
@@ -11,16 +11,18 @@ exports.Client = class Client {
     constructor(server, socket) {
         // 0: Spectator, 1: Player1, 2: Player2.
         this.playerId = 0;
+        // This is the Id of the clients current game.
+        this.gameId = null;
         // Holds a reference to the server.
         this.server = server;
         // This client's socket.
         this.socket = socket;
         // Holds the buffer for controlling data flow.
-        this.buffer = Buffer.aloc(0);
+        this.buffer = Buffer.alloc(0);
         // This client's username.
         this.username = "";
         // If there is an error.
-        this.socket.on('error', (msg) = > {console.log(msg)});
+        this.socket.on('error', (msg) => {console.log(msg)});
         // If the client loses connection.
         this.socket.on('close', () => { this.server.handleDisconnect(this); });
         // For incoming data.

@@ -1,5 +1,5 @@
 var Client = require("./Client.js").Client;
-var Protocol = require("./KindoProtocol.js").Protocol;
+var KindoP = require("./KindoProtocol.js").Protocol;
 var Game = require("./Game.js").Game;
 var net = require("net");
 
@@ -13,50 +13,59 @@ exports.Server = class Server {
         this.clients = [];
         // A list of active games.
         this.games = [];
-        // An instance of the Game class.
-        this.game = new Game();
         // This creates the server.
-        this.server = net.createServer((connection) => {
-            this.clients.push(new Client(this, connection));
+        this.server = net.createServer((socket) => {
+            this.clients.push(new Client(this, socket));
         });
         // This sets the server to listen on the given port.
-        this.server.listen(this.port, () => { 
+        this.server.listen(this.port, () => {
             console.log("Server listening on " + this.port);
         });
     }
     // This runs when a client disconnects.
     // Param: game <Game>
     // Param: client <Client>
-    onDisconnect(game, client) {
+    handleDisconnect(client) {
+        console.log("Client disconnected.");
+        // Find that clients game.
+        let game = this.findGame(client.gameId);
+        // Remove user from game.
+        game.removeUser(client);
         // Remove client from the clients array.
         this.clients.splice(this.clients.indexOf(client), 1);
-        // If the client is a player, that player is null.
-        if(game.player1 === client) game.player1 = null;
-        if(game.player2 === client) game.player2 = null;
         // If a player is null reset the game.
         if(game.player1 == null || game.player2 == null) {
             game.reset();
-            this.broadcastStatus(game);
+            this.broadcastStatus(game.gameId);
         }
-
-
     }
     // This broadcasts a packet to all clients in the specified game.
-    // Param: game <Game> The target game's id.
+    // Param: gameId <int>
     // Param: buffer <Buffer>
-    broadcast(game, buffer) {
-
+    broadcast(gameId, buffer) {
+        // Find the right game.
+        let game = this.findGame(gameId);
+        // Broadcast to all users in game.
+        game.inGameBroadcast(buffer);
     }
     // This broadcasts the game status to all clients
     // the specified game.
-    // Param: game <Game>
-    broadcastStatus(game) {
+    // Param: gameId <int>
+    // Param: buffer <Buffer>
+    broadcastStatus(gameId, buffer) {
+        if(this.findGame(gameId).ready) {
+
+        }
 
     }
-    // This checks to see if the specified game is ready.
-    // Param: game <Game>
-    isReady(game) {
-
+    // Find the right game based on the gameId.
+    // Param: gameId <int>
+    // Return: Game
+    findGame(gameId) {
+        this.games.map((game) => {
+            if(game.gameId === gameId) { return game; }
+            else return null;
+        });
     }
 
 }
