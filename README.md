@@ -1,6 +1,5 @@
 # Kindo
 A simple game about outsmarting your enemy.  
-___
 
 ## Protocol 
 v0.0.1
