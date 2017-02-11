@@ -56,6 +56,11 @@ Packet type, CHAT|4|0|ascii|
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
+|The packet type, JOIN|4|0|ascii|
+|Join as (1:Play, 2:Spec)|1|4|uint8|
+|Game Id|1|5|uint8|
+|Username Length|1|6|ascii|
+|Username|?|7|ascii|
 
 <br>
 #### Chat Packet - When a chat is sent.
