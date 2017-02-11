@@ -1,18 +1,9 @@
 # Kindo
 A simple game about outsmarting your enemy.  
 
-## Protocol v0.0.1 ##
+## Protocol v0.0.1
 
 ### Packets from server
-
-JOIN - A join response packet from the server.  
-
-| Description | Size | Offset | Type |
-|:-----------:|:----:|:------:|:----:|
-| The packet type | 4 | 0 | ascii |
-
-
-
 
 JOIN - The JOIN response from the server.
 
@@ -33,11 +24,8 @@ CHAT - Broadcasts a chat messages.
 
         4       0         ascii   Packet type, CHAT.
 
-==============================================
-Packets from client
 
-Name    Size    Offset    Type    Description
-==============================================
+### Packets from client
 JOIN
 CHAT
 MOVE
