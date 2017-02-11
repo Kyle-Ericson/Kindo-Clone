@@ -9,7 +9,6 @@ Kyle Ericson
 
 
 # Packets from server
----
 
 
 #### Size    Offset    Type    Description
