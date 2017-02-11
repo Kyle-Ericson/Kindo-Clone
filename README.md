@@ -25,6 +25,16 @@ v0.0.1
 |Error Code|1|5|uint8|
 
 <br>
+#### Host Packet - Host response packet.
+
+| Descrption | Size | Offset | Type |
+|:---|:---:|:---:|:---:|
+|The packet type, HOST|4|0|ascii|
+|Game Id (0:Fail, 1-255:Game Id)|1|4|uint8|
+|Error Code|1|5|uint8|
+
+
+<br>
 #### Start Packet - When the server is ready to start the game.
 
 | Descrption | Size | Offset | Type |
@@ -59,6 +69,15 @@ Packet type, CHAT|4|0|ascii|
 |The packet type, JOIN|4|0|ascii|
 |Join as (1:Play, 2:Spec)|1|4|uint8|
 |Game Id|1|5|uint8|
+|Username Length|1|6|ascii|
+|Username|?|7|ascii|
+
+<br>
+#### Host Packet - Host request packet.
+
+| Descrption | Size | Offset | Type |
+|:---|:---:|:---:|:---:|
+|The packet type, HOST|4|0|ascii|
 |Username Length|1|6|ascii|
 |Username|?|7|ascii|
 
