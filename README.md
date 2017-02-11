@@ -1,11 +1,12 @@
 # Kindo
 A simple game about outsmarting your enemy.  
+___
 
-
-
-## Protocol v0.0.1
+## Protocol 
+v0.0.1
 
 ### Packets from server
+
 
 #### Join Packet - The Join response from the server.  
 
@@ -34,6 +35,7 @@ Packet type, UPDT|4|0|ascii|
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 Packet type, CHAT|4|0|ascii|
+
 
 ### Packets from client
 
