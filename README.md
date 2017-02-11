@@ -1,5 +1,8 @@
 # Kindo
-A simple game about outsmarting your enemy.  
+A simple game about outsmarting your enemy.
+
+## About
+This game was developed for a school project using Node.js and ActionScript3. The goal is to learn how to send packets from server to client using various compression techniques.
 
 ## Protocol 
 v0.0.1
