@@ -5,10 +5,9 @@ A simple game about outsmarting your enemy.
 
 ## Protocol v0.0.1
 
-## Packets from server
+### Packets from server
 
-#### Join Packet
-The Join response from the server.  
+#### Join Packet - The Join response from the server.  
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
@@ -17,50 +16,43 @@ The Join response from the server.
 |Error Code|1|5|uint8|
 
 
-#### Start Packet
-When the server is ready to start the game.
+#### Start Packet - When the server is ready to start the game.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 |Packet type, STRT|4|0|ascii|
 |Status (0:Not ready, 1:Start Game)|1|4|uint8|
 
-#### Update Packet
-This packet updates the clients games.
+#### Update Packet - This packet updates the clients games.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 Packet type, UPDT|4|0|ascii|
 
-#### Chat Packet
-Broadcasts a chat messages.
+#### Chat Packet - Broadcasts a chat messages.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 Packet type, CHAT|4|0|ascii|
 
-## Packets from client
+### Packets from client
 
-#### Join Packet
-Join request packet.
-
-| Descrption | Size | Offset | Type |
-|:---:|:---:|:---:|:---:|
-
-#### Chat Packet
-When a chat is sent.
+#### Join Packet - Join request packet.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 
-#### Turn Packet
-Sends the players turn information.
+#### Chat Packet - When a chat is sent.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
 
-#### End Turn Packet
-Sends when the player is ready to end their turn.
+#### Turn Packet - Sends the players turn information.
+
+| Descrption | Size | Offset | Type |
+|:---:|:---:|:---:|:---:|
+
+#### End Turn Packet - Sends when the player is ready to end their turn.
 
 | Descrption | Size | Offset | Type |
 |:---:|:---:|:---:|:---:|
