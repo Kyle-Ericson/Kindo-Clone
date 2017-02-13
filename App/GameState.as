@@ -7,7 +7,7 @@
 		public var cells: Array = new Array(
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, );
+			0, 0, 0, 0, 0);
 
 		public function GameState(stream: LegitBuffer) {
 			playersTurn = stream.readUInt8(4);
@@ -21,6 +21,22 @@
 			cells[6] = stream.readUInt8(12);
 			cells[7] = stream.readUInt8(13);
 			cells[8] = stream.readUInt8(14);
+			cells[9] = stream.readUInt8(15);
+			cells[10] = stream.readUInt8(16);
+			cells[11] = stream.readUInt8(17);
+			cells[12] = stream.readUInt8(18);
+			cells[13] = stream.readUInt8(19);
+			cells[14] = stream.readUInt8(20);
+			cells[15] = stream.readUInt8(21);
+			cells[16] = stream.readUInt8(22);
+			cells[17] = stream.readUInt8(23);
+			cells[18] = stream.readUInt8(24);
+			cells[19] = stream.readUInt8(25);
+			cells[20] = stream.readUInt8(26);
+			cells[21] = stream.readUInt8(27);
+			cells[22] = stream.readUInt8(28);
+			cells[23] = stream.readUInt8(29);
+			cells[24] = stream.readUInt8(30);
 		}
 	}
 }

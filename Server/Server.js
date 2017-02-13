@@ -30,14 +30,16 @@ exports.Server = class Server {
         // Find that clients game.
         let game = this.findGame(client.gameId);
         // Remove user from game.
-        game.removeUser(client);
+        if(game != null) {
+            game.removeUser(client);
+            // If a player is null reset the game.
+            if(game.player1 == null || game.player2 == null) {
+                game.reset();
+                this.broadcastStatus(game.gameId);
+            }
+        }
         // Remove client from the clients array.
         this.clients.splice(this.clients.indexOf(client), 1);
-        // If a player is null reset the game.
-        if(game.player1 == null || game.player2 == null) {
-            game.reset();
-            this.broadcastStatus(game.gameId);
-        }
     }
     // This broadcasts a packet to all clients in the specified game.
     // Param: gameId <int>
@@ -52,9 +54,20 @@ exports.Server = class Server {
     // the specified game.
     // Param: gameId <int>
     // Param: buffer <Buffer>
-    broadcastStatus(gameId, buffer) {
-        if(this.findGame(gameId).ready) {
+    broadcastStatus(gameId) {
+        let game = this.findGame(gameId);
 
+        if(game.ready) {
+            this.broadcast(gameId, KindoP.buildUpdate());
+
+            if(game.winner != 0) {
+                Game.reset();
+                this.player1 = null;
+                this.player2 = null;
+            }
+        }
+        else {
+            this.broadcast(KindoP.buildWait());
         }
 
     }
@@ -67,5 +80,24 @@ exports.Server = class Server {
             else return null;
         });
     }
-
+    // Checks the requested name for errors.
+    // Returns an error code if one is found.
+    // Param: name <String>
+    // Return: <int>;
+    isNameOkay(name){
+		if(name.length < 3) return KindoP.NAME_SHORT;
+		if(name.length > 16) return KindoP.NAME_LONG;
+		if(!name.match(/^[a-zA-Z0-9\s\.\-\_]+$/)) return KindoP.NAME_CHARS;
+		this.clients.map((client) => {
+			if(name == client.username) return KindoP.NAME_TAKEN;
+		});
+		return 0;
+	}
+    // Creates a new game.
+    // Return: <Game>
+    createGame() {
+        let newGame = new Game(this.games.length + 1);
+        this.games.push(newGame);
+        return newGame();
+    }
 }

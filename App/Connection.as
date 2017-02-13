@@ -84,17 +84,23 @@
 			flush();
 		}
 		
-		public function sendJoinRequest(playMode:Boolean, username:String):void {
+		public function sendJoinRequest(playMode:Boolean, username:String, gameId:int):void {
 			var buffer:LegitBuffer = new LegitBuffer();
 			buffer.write("JOIN");
 			buffer.writeUInt8(playMode ? 1 : 2, 4);
-			buffer.writeUInt8(username.length, 5);
-			buffer.write(username, 6);
+			buffer.writeUInt8(gameId, 5);
+			buffer.writeUInt8(username.length, 6);
+			buffer.write(username, 7);
 			
 			write(buffer);
 		}
 		public function sendHostRequest(username:String) {
+			var buffer:LegitBuffer = new LegitBuffer();
+			buffer.write("HOST");
+			buffer.writeUInt8(username.length, 4);
+			buffer.write(username, 5);
 			
+			write(buffer);
 		}
 		public function sendMove(cell:int):void {
 			var buffer:LegitBuffer = new LegitBuffer();

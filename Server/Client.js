@@ -12,7 +12,7 @@ exports.Client = class Client {
         // 0: Spectator, 1: Player1, 2: Player2.
         this.playerId = 0;
         // This is the Id of the clients current game.
-        this.gameId = null;
+        this.gameId = 0;
         // Holds a reference to the server.
         this.server = server;
         // This client's socket.
@@ -56,13 +56,16 @@ exports.Client = class Client {
             case null:
                 break;
             // Join packet.
-            case "JOIN": readPacketJoin();
+            case "JOIN": this.readPacketJoin();
                 break;
             // Move packet.
-            case "MOVE": readPacketMove();
+            case "MOVE": this.readPacketMove();
                 break;
             // Chat packet.
-            case "CHAT": readPacketChat();
+            case "CHAT": this.readPacketChat();
+                break;
+            // Host packet.
+            case "HOST": this.readPacketHost();
                 break;
             // This will happen if there is an unexpected packet in the stream.
             default:
@@ -82,7 +85,57 @@ exports.Client = class Client {
         this.buffer = this.buffer.slice(n, this.buffer.length);
     }
     readPacketJoin() {
+        // If not enough data, return.
+        if(this.buffer.length < 7) return;
+        // What to join the game as.
+        let joinAs = this.buffer.readUInt8(4);
+        // The game id of the game they want to join.
+        let gameId = this.buffer.readUInt8(5);
+        // The target game the player wants to join.
+        let game = this.server.findGame(gameId);
+        // If there is no game, respond with and error code 6.
+        // else, give this games id to the client.
+        if(game == null) {
+            this.socket.write(KindoP.buildJoinResponse(this.playerId, KindoP.NO_GAME));
+            return;
+        }
+        else this.gameId = game.gameId;
+        // Username length.
+        let usernameLength = this.buffer.readUInt8(6);
+        // Total packet Length.
+        let packetLength = 7 + usernameLength;
+        // Not enough data, return.
+        if(this.buffer.length < packetLength) return;
+        // Requested username.
+        let username = this.buffer.slice(7, 7 + usernameLength).toString();
+        // Remove this data from the buffer.
+        splitBuffer(packetLength);
 
+        // Decide if the players username is valid.
+        let errcode = this.server.isNameOkay(username);
+        // If no error, default to spectator.
+        // If errcode == 0 playerId = 3, else it = 0.
+        this.playerId = (errcode == 0 ? 3 : 0);
+
+        if(joinAs == 1 && errcode == 0) {
+            if(game.player1 == null) {
+                this.playerId = 1;
+                game.player1 = this;
+            }
+            else if(game.player2 == null) {
+                this.playerId = 2;
+                game.player2 = this;
+            }
+            else {
+                this.playerId = 0;
+                errcode = KindoP.GAME_FULL;
+            }
+        }
+        else if(joinAs == 2 && errorcode == 0) {
+            game.spectators.push(this);
+        }
+        this.sock.write(KindoP.buildJoinResponse(this.playerId, errcode));
+        this.server.broadcastStatus(game.gameId);
     }
     readPacketMove() {
 
@@ -90,6 +143,44 @@ exports.Client = class Client {
     readPacketChat() {
 
     }
+    readPacketHost() {
+        console.log("Host request.");
+        // If not enough data, return.
+        if(this.buffer.length < 5) return;
+        // Username length.
+        let usernameLength = this.buffer.readUInt8(6);
+        // Total packet Length.
+        let packetLength = 5 + usernameLength;
+        // Not enough data, return.
+        if(this.buffer.length < packetLength) return;
+        // Requested username.
+        let username = this.buffer.slice(5, 5 + usernameLength).toString();
+        // Remove this data from the buffer.
+        this.splitBuffer(packetLength);
 
 
-}// end connection
+        // Decide if the players username is valid.
+        let errcode = this.server.isNameOkay(username);
+
+        if(errorcode == 0) {
+            let newGame = this.server.createGame();
+            this.server.games.map((game) => {
+                if (newGame.gameId == game.gameId) {
+                    errorcode = KindoP.GAME_EXISTS;
+                    this.server.games.splice(this.server.games.indexOf(newGame), 1);
+                }
+            });
+            if(errorcode == 0) {
+                this.playerId = 1;
+                this.gameId = newGame.gameId;
+                console.log(newGame.gameId);
+                console.log(this.gameId);
+                newGame.player1 = this;
+            }
+        }
+        else if(errorcode > 0) {
+            this.gameId = 0;
+        }
+        this.sock.write(KindoP.buildHostResponse(this.gameId, errcode));
+    }
+}
