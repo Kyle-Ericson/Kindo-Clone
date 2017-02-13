@@ -78,8 +78,8 @@ Packet type, CHAT|4|0|ascii|
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
 |The packet type, HOST|4|0|ascii|
-|Username Length|1|6|ascii|
-|Username|?|7|ascii|
+|Username Length|1|4|ascii|
+|Username|?|5|ascii|
 
 <br>
 #### Chat Packet - When a chat is sent.
