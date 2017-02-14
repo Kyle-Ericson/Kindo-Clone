@@ -145,42 +145,58 @@ exports.Client = class Client {
     }
     readPacketHost() {
         console.log("Host request.");
+        console.log("Buffer: " + this.buffer.length);
         // If not enough data, return.
         if(this.buffer.length < 5) return;
         // Username length.
-        let usernameLength = this.buffer.readUInt8(6);
+        let usernameLength = this.buffer.readUInt8(4);
         // Total packet Length.
         let packetLength = 5 + usernameLength;
+        console.log("Packet: " + packetLength);
         // Not enough data, return.
         if(this.buffer.length < packetLength) return;
         // Requested username.
         let username = this.buffer.slice(5, 5 + usernameLength).toString();
+        console.log("Username: " + username);
         // Remove this data from the buffer.
         this.splitBuffer(packetLength);
-
-
         // Decide if the players username is valid.
         let errcode = this.server.isNameOkay(username);
-
-        if(errorcode == 0) {
+        console.log("Check Name Err: " + errcode);
+        // If user name is valid...
+        if(errcode == 0) {
+            // Create a new game.
             let newGame = this.server.createGame();
+            // Check to see if there is a game that already has that ID.
             this.server.games.map((game) => {
-                if (newGame.gameId == game.gameId) {
-                    errorcode = KindoP.GAME_EXISTS;
-                    this.server.games.splice(this.server.games.indexOf(newGame), 1);
+                // If newGame isnt only game that has that ID...
+                if (newGame.gameId == game.gameId && newGame != game) {
+                    // There is an error.
+                    errcode = KindoP.GAME_EXISTS;
+                    console.log("Check Game Err: " + errcode);
+                    // Remove the newGame from the games array.
+                    this.server.removeGame(newGame);
                 }
             });
-            if(errorcode == 0) {
+            // If still no errors...
+            if(errcode == 0) {
+                console.log("Game OK");
+                // This users player ID defaults to player 1.
                 this.playerId = 1;
+                // This users gameId is the newGame's game id.
                 this.gameId = newGame.gameId;
-                console.log(newGame.gameId);
-                console.log(this.gameId);
+                console.log("Game Id: " + newGame.gameId);
+                console.log("This Game Id: " + this.gameId);
+                // newGame's player1 is this user.
                 newGame.player1 = this;
             }
         }
-        else if(errorcode > 0) {
+        else if(errcode > 0) {
             this.gameId = 0;
+            this.playerId = 0;
+            this.server.removeGame(newGame);
         }
-        this.sock.write(KindoP.buildHostResponse(this.gameId, errcode));
+        console.log("Begin building host response.");
+        //this.socket.write(KindoP.buildHostResponse(this.gameId, errcode));
     }
 }

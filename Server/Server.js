@@ -98,6 +98,11 @@ exports.Server = class Server {
     createGame() {
         let newGame = new Game(this.games.length + 1);
         this.games.push(newGame);
-        return newGame();
+        return newGame;
+    }
+    // Removes a game from the games list.
+    // Param: game <Game>
+    removeGame(game) {
+        this.games.splice(this.games.indexOf(game), 1);
     }
 }

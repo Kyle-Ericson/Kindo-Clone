@@ -23,6 +23,7 @@ exports.Protocol = KindoProtocol = {
     },
     // Host response
     buildHostResponse: () => {
+        console.log("Begin building host response.");
 
     }
 
