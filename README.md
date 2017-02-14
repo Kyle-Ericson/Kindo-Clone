@@ -1,9 +1,7 @@
 # Plebs
 _pleb_  
-an ordinary person, especially one from the lower social classes.
-Origin
-
-mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
+an ordinary person, especially one from the lower social classes.  
+Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
 <br>
 
