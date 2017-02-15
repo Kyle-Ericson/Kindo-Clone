@@ -26,15 +26,6 @@ v0.0.1
 |Response (0:Fail, 1:P1, 2:P2, 3:Spec)|1|4|uint8|
 |Error Code|1|5|uint8|
 
-<br>
-#### Host Packet - Host response packet.
-
-| Descrption | Size | Offset | Type |
-|:---|:---:|:---:|:---:|
-|The packet type, HOST|4|0|ascii|
-|Game Id (0:Fail, 1-255:Game Id)|1|4|uint8|
-|Error Code|1|5|uint8|
-
 
 <br>
 #### Start Packet - When the server is ready to start the game.
@@ -49,7 +40,10 @@ v0.0.1
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
-Packet type, UPDT|4|0|ascii|
+|Packet type, UPDT|4|0|ascii|
+|Players turn|1|4|uint8|
+|Winner|1|5|uint8|
+|Cell status|1 * 30|6-35|uint8|
 
 <br>
 #### Chat Packet - Sends a chat messages.
