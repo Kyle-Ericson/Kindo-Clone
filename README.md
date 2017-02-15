@@ -82,6 +82,9 @@ Packet type, CHAT|4|0|ascii|
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
+|Packet type, CHAT|4|0|ascii|
+|Message size|?|4|uint8|
+|Message|?|?|ascii|
 
 <br>
 #### Turn Packet - Sends the players turn information.
