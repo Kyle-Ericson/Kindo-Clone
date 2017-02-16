@@ -50,7 +50,11 @@ v0.0.1
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
-Packet type, CHAT|4|0|ascii|
+|Packet type, CHAT|4|0|ascii|
+|Username length|1|4|uint8|
+|username|?|5|ascii|
+|message length|1|?|uint8|
+|message|?|?|ascii|
 
 <br>
 <br>
