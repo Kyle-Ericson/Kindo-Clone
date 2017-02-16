@@ -1,5 +1,5 @@
 var Client = require("./Client.js").Client;
-var KindoP = require("./KindoProtocol.js").Protocol;
+var PP = require("./PlebsProtocol.js").PP;
 var Game = require("./Game.js").Game;
 var net = require("net");
 
@@ -30,25 +30,25 @@ exports.Server = class Server {
         // Find that clients game.
         let game = this.findGame(client.gameId);
         // Remove user from game.
-        if(game != null) {
+        if (game != null) {
             game.removeUser(client);
             // If a player is null reset the game.
-            if(game.player1 == null || game.player2 == null) {
-                game.reset();
-                this.broadcastStatus(game.gameId);
+            if (game.player1 == null || game.player2 == null) {
+                console.log("Not enough Players");
+                this.removeGame(game);
             }
         }
-        // Remove client from the clients array.
-        this.clients.splice(this.clients.indexOf(client), 1);
+        this.removeClient(client);
+        console.log("Clients: " + this.clients.length);
+        console.log("Games: " + this.games.length);
     }
     // This broadcasts a packet to all clients in the specified game.
     // Param: gameId <int>
     // Param: buffer <Buffer>
     broadcast(gameId, buffer) {
-        // Find the right game.
-        let game = this.findGame(gameId);
         // Broadcast to all users in game.
-        game.inGameBroadcast(buffer);
+
+        this.findGame(gameId).inGameBroadcast(buffer);
     }
     // This broadcasts the game status to all clients
     // the specified game.
@@ -57,42 +57,46 @@ exports.Server = class Server {
     broadcastStatus(gameId) {
         let game = this.findGame(gameId);
 
-        if(game.ready) {
-            this.broadcast(gameId, KindoP.buildUpdate());
+        if (game.ready) {
+            this.broadcast(gameId, PP.buildUpdate(game));
 
-            if(game.winner != 0) {
+            if (game.winner != 0) {
                 Game.reset();
                 this.player1 = null;
                 this.player2 = null;
             }
+        } else {
+            this.broadcast(gameId, PP.buildWait());
         }
-        else {
-            this.broadcast(KindoP.buildWait());
-        }
-
     }
     // Find the right game based on the gameId.
     // Param: gameId <int>
     // Return: Game
     findGame(gameId) {
+        let gameToReturn = null;
         this.games.map((game) => {
-            if(game.gameId === gameId) { return game; }
-            else return null;
+            if (game.gameId == gameId) {
+                gameToReturn = game;
+            }
+            else gameToReturn = null;
         });
+        return gameToReturn;
     }
     // Checks the requested name for errors.
     // Returns an error code if one is found.
     // Param: name <String>
     // Return: <int>;
-    isNameOkay(name){
-		if(name.length < 3) return KindoP.NAME_SHORT;
-		if(name.length > 16) return KindoP.NAME_LONG;
-		if(!name.match(/^[a-zA-Z0-9\s\.\-\_]+$/)) return KindoP.NAME_CHARS;
-		this.clients.map((client) => {
-			if(name == client.username) return KindoP.NAME_TAKEN;
-		});
-		return 0;
-	}
+    isNameOkay(name) {
+        let error = 0;
+        if (name.length < 3) error = PP.NAME_SHORT;
+        if (name.length > 16) error = PP.NAME_LONG;
+        if (!name.match(/^[a-zA-Z0-9\s\.\-\_]+$/)) error = PP.NAME_CHARS;
+
+        this.clients.map((client) => {
+            if (name === client.username) error = PP.NAME_TAKEN;
+        });
+        return error;
+    }
     // Creates a new game.
     // Return: <Game>
     createGame() {
@@ -104,5 +108,8 @@ exports.Server = class Server {
     // Param: game <Game>
     removeGame(game) {
         this.games.splice(this.games.indexOf(game), 1);
+    }
+    removeClient(client) {
+        this.clients.splice(this.clients.indexOf(client), 1);
     }
 }
