@@ -55,6 +55,7 @@
 				case PacketType.JOIN: packet = PacketInJoin.tryReading(buffer); break;
 				case PacketType.UPDT: packet = PacketInUpdt.tryReading(buffer); break;
 				case PacketType.WAIT: packet = PacketInWait.tryReading(buffer); break;
+				case PacketType.CHAT: packet = PacketInChat.tryReading(buffer); break;
 				default: // unknown packet type...
 					// there's unrecognized data in the stream, so
 					// purge one character from the stream:
@@ -106,6 +107,14 @@
 			var buffer:LegitBuffer = new LegitBuffer();
 			buffer.write("MOVE");
 			buffer.writeUInt8(cell, 4);
+			
+			write(buffer);
+		}
+		public function sendChat(msg:String) {
+			var buffer:LegitBuffer = new LegitBuffer();
+			buffer.write("CHAT");
+			buffer.writeUInt8(msg.length, 4);
+			buffer.write(msg, 5);
 			
 			write(buffer);
 		}

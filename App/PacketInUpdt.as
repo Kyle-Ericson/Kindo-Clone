@@ -9,9 +9,6 @@
 		 **/
 		public var state:GameState;
 		
-		
-		
-		
 		/**
 		 * PacketInUpdt constructor.
 		 **/
@@ -25,7 +22,7 @@
 		 *
 		 **/
 		static public function tryReading(buffer:LegitBuffer):PacketInUpdt {
-			if(buffer.length < 15) return null; // not enough data in the stream; packet incomplete
+			if(buffer.length < 30) return null; // not enough data in the stream; packet incomplete
 			return new PacketInUpdt(buffer);
 		}
 	}

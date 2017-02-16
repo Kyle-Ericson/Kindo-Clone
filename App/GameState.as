@@ -2,12 +2,15 @@
 
 	public class GameState {
 
-		public var playersTurn: int = 0;
+		public var playersTurn: int = 1;
 		public var winner: int = 0;
 		public var cells: Array = new Array(
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0);
+			2, 2, 2, 2, 2, 
+			2, 2, 2, 2, 2, 
+			0, 0, 0, 0, 0, 
+			0, 0, 0, 0, 0,
+			1, 1, 1, 1, 1, 
+			1, 1, 1, 1, 1);
 
 		public function GameState(stream: LegitBuffer) {
 			playersTurn = stream.readUInt8(4);
