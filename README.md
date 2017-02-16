@@ -1,10 +1,12 @@
-# Kindo
-A simple game about outsmarting your enemy.
+# Plebs
+_pleb_  
+an ordinary person, especially one from the lower social classes.  
+Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
 <br>
 
 ## About
-This game was developed for a school project using Node.js and ActionScript3. The goal is to learn how to send packets from server to client using various compression techniques. The game itself is a clone of another game, [Kindo](http://www.kindogame.fr/presskit/).
+This game was developed for a school project using Node.js and ActionScript3. You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 
 <br>
 
@@ -24,15 +26,6 @@ v0.0.1
 |Response (0:Fail, 1:P1, 2:P2, 3:Spec)|1|4|uint8|
 |Error Code|1|5|uint8|
 
-<br>
-#### Host Packet - Host response packet.
-
-| Descrption | Size | Offset | Type |
-|:---|:---:|:---:|:---:|
-|The packet type, HOST|4|0|ascii|
-|Game Id (0:Fail, 1-255:Game Id)|1|4|uint8|
-|Error Code|1|5|uint8|
-
 
 <br>
 #### Start Packet - When the server is ready to start the game.
@@ -47,14 +40,21 @@ v0.0.1
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
-Packet type, UPDT|4|0|ascii|
+|Packet type, UPDT|4|0|ascii|
+|Players turn|1|4|uint8|
+|Winner|1|5|uint8|
+|Cell status|1 * 30|6-35|uint8|
 
 <br>
 #### Chat Packet - Sends a chat messages.
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
-Packet type, CHAT|4|0|ascii|
+|Packet type, CHAT|4|0|ascii|
+|Username length|1|4|uint8|
+|username|?|5|ascii|
+|message length|1|?|uint8|
+|message|?|?|ascii|
 
 <br>
 <br>
@@ -86,6 +86,9 @@ Packet type, CHAT|4|0|ascii|
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
+|Packet type, CHAT|4|0|ascii|
+|Message size|1|4|uint8|
+|Message|?|5|ascii|
 
 <br>
 #### Turn Packet - Sends the players turn information.
