@@ -134,6 +134,7 @@ exports.Client = class Client {
                 game.player2 = this;
             } else {
                 this.playerId = 0;
+                this.username = null;
                 errcode = PP.GAME_FULL;
             }
             if(game.player1 && game.player2) game.ready = true;
@@ -159,6 +160,22 @@ exports.Client = class Client {
         this.server.broadcastStatus(game.gameId);
     }
     readPacketMove() {
+
+        if(this.buffer.length < 6) return;
+        console.log("Move received.");
+		const cell1 = this.buffer.readUInt8(4);
+        const cell2 = this.buffer.readUInt8(5);
+
+		this.splitBuffer(6);
+
+        let game = this.server.findGame(this.gameId);
+        console.log("Game: " + game);
+        console.log("Game Id: " + this.gameId);
+
+		if(game.ready) game.doMove(cell1 - 1, cell2 - 1, this.playerId);
+
+
+		this.server.broadcastStatus(this.gameId);
 
     }
     // Reads Chat packets

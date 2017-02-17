@@ -5,12 +5,12 @@
 		public var playersTurn: int = 1;
 		public var winner: int = 0;
 		public var cells: Array = new Array(
-			2, 2, 2, 2, 2, 
-			2, 2, 2, 2, 2, 
-			0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0,
-			1, 1, 1, 1, 1, 
-			1, 1, 1, 1, 1);
+			0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0);
 
 		public function GameState(stream: LegitBuffer) {
 			playersTurn = stream.readUInt8(4);
@@ -40,6 +40,11 @@
 			cells[22] = stream.readUInt8(28);
 			cells[23] = stream.readUInt8(29);
 			cells[24] = stream.readUInt8(30);
+            cells[25] = stream.readUInt8(31);
+            cells[26] = stream.readUInt8(32);
+            cells[27] = stream.readUInt8(33);
+            cells[28] = stream.readUInt8(34);
+            cells[29] = stream.readUInt8(35);
 		}
 	}
 }

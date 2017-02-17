@@ -24,19 +24,19 @@
 				case 0:
 					return "";
 				case 1:
-					return "Username too short";
+					return "Username too short.";
 				case 2:
-					return "Username too long";
+					return "Username too long.";
 				case 3:
-					return "Username uses invalid characters";
+					return "Username uses invalid characters.";
 				case 4:
-					return "Username is already taken";
+					return "Username is already taken.";
 				case 5:
-					return "The game session is full";
+					return "The game session is full, you may spectate.";
 				case 6:
 					return "Game Id does not exist."
 				default:
-					return "Unknown error";
+					return "Unknown.";
 			}
 			errcode = 0;
 		}

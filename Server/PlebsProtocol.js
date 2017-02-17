@@ -8,7 +8,7 @@ exports.PP = PProtocol = {
 	NAME_LONG:2,
 	NAME_CHARS:3,
 	NAME_TAKEN:4,
-	game_FULL:5,
+	GAME_FULL:5,
     NO_GAME: 6,
     GAME_EXISTS: 7,
 
@@ -30,7 +30,7 @@ exports.PP = PProtocol = {
 
 		const packet = Buffer.alloc(36);
 		packet.write("UPDT");
-		packet.writeUInt8(game.playersTurn, 4);
+		packet.writeUInt8(game.whoseTurn, 4);
 		packet.writeUInt8(game.winner, 5);
 		packet.writeUInt8(game.cells[0], 6);
 		packet.writeUInt8(game.cells[1], 7);

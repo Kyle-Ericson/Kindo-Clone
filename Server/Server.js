@@ -60,11 +60,7 @@ exports.Server = class Server {
         if (game.ready) {
             this.broadcast(gameId, PP.buildUpdate(game));
 
-            if (game.winner != 0) {
-                Game.reset();
-                this.player1 = null;
-                this.player2 = null;
-            }
+
         } else {
             this.broadcast(gameId, PP.buildWait());
         }
@@ -77,8 +73,8 @@ exports.Server = class Server {
         this.games.map((game) => {
             if (game.gameId == gameId) {
                 gameToReturn = game;
+                console.log("Found Game:" + game + " ID:" + game.gameId);
             }
-            else gameToReturn = null;
         });
         return gameToReturn;
     }
@@ -109,6 +105,8 @@ exports.Server = class Server {
     removeGame(game) {
         this.games.splice(this.games.indexOf(game), 1);
     }
+    // Removes client from the server.
+    // Param: client <Client>
     removeClient(client) {
         this.clients.splice(this.clients.indexOf(client), 1);
     }
