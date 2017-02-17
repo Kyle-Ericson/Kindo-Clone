@@ -47,7 +47,7 @@ v0.0.1
 |Packet type, UPDT|4|0|ascii|
 |Players turn|1|4|uint8|
 |Winner|1|5|uint8|
-|Cell status|1 * 30|6-35|uint8|
+|Cell status|1 each, * 30|6-35|uint8|
 
 <br>
 #### Chat Packet - Sends a chat messages.
@@ -95,13 +95,10 @@ v0.0.1
 |Message|?|5|ascii|
 
 <br>
-#### Turn Packet - Sends the players turn information.
+#### Move Packet - Sends the players turn information.
 
 | Descrption | Size | Offset | Type |
 |:---|:---:|:---:|:---:|
-
-<br>
-#### End Turn Packet - Sends when the player is ready to end their turn.
-
-| Descrption | Size | Offset | Type |
-|:---|:---:|:---:|:---:|
+|Packet type, MOVE|4|0|ascii|
+|Cell 1|1|4|uint8|
+|Cell 2|1|5|uint8|
