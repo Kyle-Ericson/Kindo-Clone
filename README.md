@@ -1,11 +1,16 @@
-# Plebs
+# Project 1
+Kyle Ericson  
+DAGD 320
+
+<br>
+
+## Plebs
 _pleb_  
 an ordinary person, especially one from the lower social classes.  
 Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
 <br>
-
-This game was developed for a school project using Node.js and ActionScript3. You control a bunch of plebs in a chess-like game. Also there is leapfrog...
+You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 
 <br>
 
