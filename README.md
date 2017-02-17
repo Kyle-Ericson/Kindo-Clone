@@ -18,7 +18,7 @@ You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 v0.0.1  
 
 
-All packets are compressed using entropy encoding. They are written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
+The data is written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
 
 <br>
 
