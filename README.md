@@ -35,14 +35,6 @@ All packets are compressed using entropy encoding. They are written into a packe
 
 
 <br>
-#### Start Packet - When the server is ready to start the game.
-
-| Descrption | Size | Offset | Type |
-|:---|:---:|:---:|:---:|
-|Packet type, STRT|4|0|ascii|
-|Status (0:Not ready, 1:Start Game)|1|4|uint8|
-
-<br>
 #### Update Packet - This packet updates the client's games.
 
 | Descrption | Size | Offset | Type |
