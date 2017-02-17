@@ -5,7 +5,6 @@ Origin: mid 17th century: originally plural, from Latin plebs . Later a shortene
 
 <br>
 
-## About
 This game was developed for a school project using Node.js and ActionScript3. You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 
 <br>
