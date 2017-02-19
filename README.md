@@ -1,6 +1,6 @@
 # Project 1
 Kyle Ericson  
-DAGD 320
+DAGD 320 - Multiplayer Game Programming
 
 
 
@@ -11,19 +11,16 @@ Origin: mid 17th century: originally plural, from Latin plebs . Later a shortene
 
 
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
-  
-    
-    
-    
-
-
+<br>
+<br>
 ## Protocol
 v0.0.1  
 
 
 The data is written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
 
-
+<br>
+<br>
 
 ### Packets from server
 
@@ -54,6 +51,7 @@ and who owns it as well as whose turn it is and if anyone has won the game or no
 |Winner|1|5|uint8|
 |Cell status|1 each, * 30|6-35|uint8|
 
+<br>
 
 #### Chat Packet - Sends a chat messages.  
 
@@ -69,8 +67,12 @@ message’s length.
 |message length|1|?|uint8|
 |message|?|?|ascii|
 
+<br>
+<br>
 
 ### Packets from client
+
+<br>
 
 #### Join Packet - Join request packet.  
 
@@ -86,6 +88,7 @@ receiving this packet.
 |Username Length|1|6|ascii|
 |Username|?|7|ascii|
 
+<br>
 
 #### Host Packet - Host request packet.  
 
@@ -100,6 +103,8 @@ receiving this packet.
 |Username|?|5|ascii|
 
 
+<br>
+
 #### Chat Packet - When a chat is sent.  
 
 This packet sends desired chat information that they would like the server to broadcast to all
@@ -112,6 +117,8 @@ packet to all users in the game.
 |Packet type, CHAT|4|0|ascii|
 |Message size|1|4|uint8|
 |Message|?|5|ascii|
+
+<br>
 
 #### Move Packet - Sends the players turn information.  
 
