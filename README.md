@@ -2,15 +2,18 @@
 Kyle Ericson  
 DAGD 320 - Multiplayer Game Programming
 
-
+<br>
 
 ## Plebs
 _pleb_  
 an ordinary person, especially one from the lower social classes.  
 Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
-
+## About
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
+This game was built using Node.js and Actionscript3. As a school project the main outcome was that we learn to send packets back and forth between a server and a client.
+
+##
 <br>
 <br>
 ## Protocol
