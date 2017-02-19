@@ -2,20 +2,24 @@
 Kyle Ericson  
 DAGD 320 - Multiplayer Game Programming
 
+<br>
 ## Plebs
-_pleb_  
-an ordinary person, especially one from the lower social classes.  
+_pleb:_ an ordinary person, especially one from the lower social classes.  
 Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
+<br>
 ## About
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 This game was built using Node.js and Actionscript3. As a school project the main outcome was that we learn to send packets back and forth between a server and a client.
 
+<br>
 ## Protocol
 v0.0.1  
 
 The data is written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
 
+<br>
+<br>
 ### Packets from server
 
 #### Join Packet - The Join response from the server.
@@ -29,6 +33,7 @@ errors in their username, and what type of user they joined as.
 |Response (0:Fail, 1:P1, 2:P2, 3:Spec)|1|4|uint8|
 |Error Code|1|5|uint8|
 
+<br>
 #### Update Packet - This packet updates the client's games.
 
 This updates the client's game state. This sends information about each cell in the game board
@@ -41,6 +46,7 @@ and who owns it as well as whose turn it is and if anyone has won the game or no
 |Winner|1|5|uint8|
 |Cell status|1 each, * 30|6-35|uint8|
 
+<br>
 #### Chat Packet - Sends a chat messages.
 
 This packet contains the information about a chat message to be broadcasted to all users in that
@@ -54,8 +60,11 @@ game. It contains the username and its length for parsing, along with the messag
 |message length|1|?|uint8|
 |message|?|?|ascii|
 
+<br>
+<br>
 ### Packets from client
 
+<br>
 #### Join Packet - Join request packet.
 
 This is the join request packet. It sends desired information just as the user type(player or
@@ -70,6 +79,7 @@ receiving this packet.
 |Username Length|1|6|ascii|
 |Username|?|7|ascii|
 
+<br>
 #### Host Packet - Host request packet.
 
 Like the join request packet, this packet asks the server if it could start a new game session with
@@ -82,6 +92,7 @@ receiving this packet.
 |Username Length|1|4|ascii|
 |Username|?|5|ascii|
 
+<br>
 #### Chat Packet - When a chat is sent.
 
 This packet sends desired chat information that they would like the server to broadcast to all
@@ -94,6 +105,7 @@ packet to all users in the game.
 |Message size|1|4|uint8|
 |Message|?|5|ascii|
 
+<br>
 #### Move Packet - Sends the players turn information.
 
 This packet contains the desired move a player would like to make. It contains the first cell
