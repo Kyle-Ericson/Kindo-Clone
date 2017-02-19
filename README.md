@@ -19,7 +19,6 @@ v0.0.1
 The data is written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
 
 <br>
-<br>
 ### Packets from server
 
 #### Join Packet - The Join response from the server.
@@ -64,7 +63,6 @@ game. It contains the username and its length for parsing, along with the messag
 <br>
 ### Packets from client
 
-<br>
 #### Join Packet - Join request packet.
 
 This is the join request packet. It sends desired information just as the user type(player or
