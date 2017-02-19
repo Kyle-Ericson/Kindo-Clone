@@ -1,26 +1,26 @@
-## Plebs
+# Plebs
 _pleb:_ an ordinary person, especially one from the lower social classes.  
 Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
 
 <br>
-### About
+## About
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 This game was built using Node.js and Actionscript3. As a school project the main outcome was that we learn to send packets back and forth between a server and a client.
 
 <br>
-### How to play
+## How to play
 To play, simply download everything and run the server use `node ./server/main.js` in the command line while in the Plebs directory. You must have node.js installed. Once the server is running run main.exe inside the client folder, and connect to the local server.
 
 To play the game you click on the pleb you would like to move then click on the desired location. You may only move by leapfrogging and you may only leapfrog left, right, up, or down. Get one pleb to the other side to win.
 
 <br>
-### Protocol
+## Protocol
 v1.0.0
 
 This is the protocol for sending packets back and forth. Size and offset are measured in bytes. The data is written into a packet and interpreted by following this protocol and parsing the data according to its size, offset and type. There are no special characters used to separate parts.
 
 <br>
-### Packets from server
+## Packets from server
 
 #### Join Packet - The Join response from the server.
 
@@ -62,7 +62,7 @@ game. It contains the username and its length for parsing, along with the messag
 
 <br>
 <br>
-### Packets from client
+## Packets from client
 
 #### Join Packet - Join request packet.
 
