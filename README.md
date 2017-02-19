@@ -11,7 +11,10 @@ Origin: mid 17th century: originally plural, from Latin plebs . Later a shortene
 
 
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
-
+  
+    
+    
+    
 
 
 ## Protocol
