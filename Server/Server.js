@@ -96,10 +96,16 @@ exports.Server = class Server {
     // Creates a new game.
     // Return: <Game>
     createGame() {
-        let newGame = new Game(this.games.length + 1);
+        let newGameId = this.pickNum();
+
+        let newGame = new Game(newGameId);
         this.games.push(newGame);
         return newGame;
     }
+    pickNum(){
+        return Math.floor(Math.random() * 255 + 1);
+    }
+
     // Removes a game from the games list.
     // Param: game <Game>
     removeGame(game) {

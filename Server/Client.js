@@ -75,6 +75,10 @@ exports.Client = class Client {
             case "HOST":
                 this.readPacketHost();
                 break;
+                // Leave Packet
+            case "LEAV":
+                this.readPacketLeave();
+                break;
                 // This will happen if there is an unexpected packet in the stream.
             default:
                 return false;
@@ -137,7 +141,7 @@ exports.Client = class Client {
                 this.username = null;
                 errcode = PP.GAME_FULL;
             }
-            if(game.player1 && game.player2) game.ready = true;
+            if (game.player1 && game.player2) game.ready = true;
 
         } else if (joinAs == 2 && errcode == 0) {
             this.username = username;
@@ -161,21 +165,21 @@ exports.Client = class Client {
     }
     readPacketMove() {
 
-        if(this.buffer.length < 6) return;
+        if (this.buffer.length < 6) return;
         console.log("Move received.");
-		const cell1 = this.buffer.readUInt8(4);
+        const cell1 = this.buffer.readUInt8(4);
         const cell2 = this.buffer.readUInt8(5);
 
-		this.splitBuffer(6);
+        this.splitBuffer(6);
 
         let game = this.server.findGame(this.gameId);
         console.log("Game: " + game);
         console.log("Game Id: " + this.gameId);
 
-		if(game.ready) game.doMove(cell1 - 1, cell2 - 1, this.playerId);
+        if (game.ready) game.doMove(cell1 - 1, cell2 - 1, this.playerId);
 
 
-		this.server.broadcastStatus(this.gameId);
+        this.server.broadcastStatus(this.gameId);
 
     }
     // Reads Chat packets
@@ -244,12 +248,47 @@ exports.Client = class Client {
         console.log("Buffer: " + this.buffer.length);
         console.log("Packet: " + packetLength);
         console.log("Username: " + this.username);
-        if(newGame) console.log("Game Id: " + newGame.gameId);
+        if (newGame) console.log("Game Id: " + newGame.gameId);
         console.log("playerid: " + this.playerId);
         console.log("Games: " + this.server.games.length);
         console.log("Err: " + errcode);
 
         this.socket.write(PP.buildJoinResponse(this.playerId, this.gameId, errcode));
         if (newGame != null) this.server.broadcastStatus(this.gameId);
+    }
+    readPacketLeave() {
+        // If not enough data, return.
+        if (this.buffer.length < 4) return;
+        // Remove this data from the buffer.
+        this.splitBuffer(4);
+        // Find the game.
+        let game = this.server.findGame(this.gameId);
+        // Remove this user.
+        game.removeUser(this);
+        this.playerId = 0;
+        this.gameId = 0;
+        this.username = "";
+        // If not enough players
+        if (game.player1 == null || game.player2 == null) {
+            game.inGameBroadcast(PP.buildLeave());
+            game.spectators.map((spec) => {
+                spec.playerId = 0;
+                spec.gameId = 0;
+                spec.username = "";
+            });
+            if (game.player1 != null) {
+                game.player1.playerId = 0;
+                game.player1.gameId = 0;
+                game.player1.username = "";
+            }
+            if (game.player2 != null) {
+                game.player2.playerId = 0;
+                game.player2.gameId = 0;
+                game.player2.username = "";
+            }
+            this.server.removeGame(game);
+
+        }
+
     }
 }

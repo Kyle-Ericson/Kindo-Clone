@@ -26,6 +26,11 @@ exports.PP = PProtocol = {
         packet.write("WAIT");
         return packet;
     },
+    buildLeave: () => {
+        let packet = Buffer.alloc(4);
+        packet.write("LEAV");
+        return packet;
+    },
     buildUpdate:(game) => {
 
 		const packet = Buffer.alloc(36);

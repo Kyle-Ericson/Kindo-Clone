@@ -56,6 +56,7 @@
 				case PacketType.UPDT: packet = PacketInUpdt.tryReading(buffer); break;
 				case PacketType.WAIT: packet = PacketInWait.tryReading(buffer); break;
 				case PacketType.CHAT: packet = PacketInChat.tryReading(buffer); break;
+				case PacketType.LEAV: packet = PacketInLeave.tryReading(buffer); break;
 				default: // unknown packet type...
 					// there's unrecognized data in the stream, so
 					// purge one character from the stream:
@@ -118,6 +119,12 @@
 			buffer.write(msg, 5);
 
 			write(buffer);
+		}
+		public function sendLeave() {
+			var buffer:LegitBuffer = new LegitBuffer();
+			buffer.write("LEAV");
+			write(buffer);
+			
 		}
 
 	}
