@@ -1,9 +1,13 @@
-# Plebs
-_pleb:_ an ordinary person, especially one from the lower social classes.  
-Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
+<p align="center">
+<img src="https://cdn.meme.am/cache/instances/folder813/58142813.jpg">
+</p>
+
 
 <br>
 ## About
+_Pleb:_ an ordinary person, especially one from the lower social classes.  
+Origin: mid 17th century: originally plural, from Latin plebs . Later a shortened form of plebeian.
+
 You control a bunch of plebs in a chess-like game. Also there is leapfrog...
 This game was built using Node.js and Actionscript3. As a school project the main outcome was that we learn to send packets back and forth between a server and a client.
 
