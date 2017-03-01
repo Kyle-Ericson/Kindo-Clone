@@ -3,7 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="#introduction"><img src="https://img.shields.io/badge/Platform-Node.js/ActionScript3-brightgreen.svg?style=flat-square"/></a>
+  <a href="#introduction"><img src="https://img.shields.io/badge/Server%20Platform-Node.js-brightgreen.svg?style=flat-square"/></a>
+  <a href="#introduction"><img src="https://img.shields.io/badge/Client%20Platform-ActionScript3-brightgreen.svg?style=flat-square"/></a>
   <a href="#introduction"><img src="https://img.shields.io/badge/Current%20Version-0.3.0-brightgreen.svg?style=flat-square"/></a>
   <a href="https://github.com/Kyle-Ericson/Plebs/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square"/></a>
 </p>
