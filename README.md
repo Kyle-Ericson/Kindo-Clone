@@ -2,6 +2,11 @@
 <img src="https://cdn.meme.am/cache/instances/folder813/58142813.jpg">
 </p>
 
+<p align="center">
+  <a href="#introduction"><img src="https://img.shields.io/badge/Platform-Node.js/ActionScript3-brightgreen.svg?style=flat-square"/></a>
+  <a href="#introduction"><img src="https://img.shields.io/badge/Current%20Version-0.3.0-brightgreen.svg?style=flat-square"/></a>
+  <a href="#introduction"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square"/></a>
+</p>
 
 <br>
 ## About
